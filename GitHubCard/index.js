@@ -3,6 +3,27 @@
            https://api.github.com/users/<your name>
 */
 
+function getGithubData() {
+
+  axios.get('https://api.github.com/users/jaynecn')
+    .then(response => {
+        // deal with the response data in here
+        // document.body.innerText = response.data;
+        let newcard = cardCreator(response.data);
+        let newDiv = document.createElement('div');
+        newDiv.appendChild(newcard);
+        let cards = document.querySelector('.cards');
+        cards.appendChild(newDiv);
+
+    })
+    .catch(error => {
+        // deal with the error in here
+        document.body.innerText = error.message;
+        console.log(error.message);
+    });
+}
+getGithubData();
+
 /* Step 2: Inspect and study the data coming back, this is YOUR 
    github info! You will need to understand the structure of this 
    data in order to use it to build your component function 
@@ -45,6 +66,55 @@ const followersArray = [];
 </div>
 
 */
+
+function cardCreator(user) {
+
+  const cardDiv = document.createElement('div');
+  const image = document.createElement('img');
+  const infoDiv = document.createElement('div');
+  const name = document.createElement('h3');
+  const username = document.createElement('p');
+  const location = document.createElement('p');
+  const profile = document.createElement('p');
+  const pagelink = document.createElement('a');
+  const followers = document.createElement('p');
+  const following = document.createElement('p');
+  const bio = document.createElement('p');
+
+  cardDiv.classList.add('card');
+  infoDiv.classList.add('card-info');
+  name.classList.add('name');
+  username.classList.add('username');
+  
+  image.setAttribute('src', user.avatar_url);
+  pagelink.setAttribute('href', user.html_url);
+   
+  name.textContent = user.name; 
+  username.textContent = user.login;
+  location.textContent = `Location: ${user.location}`;
+  profile.textContent = `Profile:`;
+  pagelink.textContent = user.html_url;
+  followers.textContent = `Followers: ${user.followers}`;
+  following.textContent = `Following: ${user.following}`;
+  bio.textContent = `Bio: ${user.bio}`;
+
+  cardDiv.appendChild(image);
+  cardDiv.appendChild(infoDiv);
+
+  infoDiv.appendChild(name);
+  infoDiv.appendChild(username);
+  infoDiv.appendChild(location);
+  infoDiv.appendChild(profile);
+  profile.appendChild(pagelink);
+  infoDiv.appendChild(followers);
+  infoDiv.appendChild(following);
+  infoDiv.appendChild(bio);
+
+  console.log(cardDiv);
+
+  return cardDiv;
+}
+
 
 /* List of LS Instructors Github username's: 
   tetondan
