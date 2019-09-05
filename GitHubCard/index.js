@@ -4,17 +4,25 @@
 */
 
 function getGithubData() {
-  axios.get('https://api.github.com/users/jaynecn')
-    .then(() => {
-        // deal with the response data in here
-        debugger
-    })
-    .catch(() => {
-        // deal with the error in here
-        debugger
-    })
-}
 
+  axios.get('https://api.github.com/users/jaynecn')
+    .then(response => {
+        // deal with the response data in here
+        // document.body.innerText = response.data;
+        let newcard = cardCreator(response.data);
+        let newDiv = document.createElement('div');
+        newDiv.appendChild(newcard);
+        let cards = document.querySelector('.cards');
+        cards.appendChild(newDiv);
+
+    })
+    .catch(error => {
+        // deal with the error in here
+        document.body.innerText = error.message;
+        console.log(error.message);
+    });
+}
+getGithubData();
 
 /* Step 2: Inspect and study the data coming back, this is YOUR 
    github info! You will need to understand the structure of this 
@@ -80,12 +88,12 @@ function cardCreator(user) {
   
   image.setAttribute('src', user.avatar_url);
   pagelink.setAttribute('href', user.html_url);
-  
-  name.textContent = user.name;
+   
+  name.textContent = user.name; 
   username.textContent = user.login;
   location.textContent = `Location: ${user.location}`;
-  profile.textContent = 'Profile:';
-  page.link.textContent = user.html_url;
+  profile.textContent = `Profile:`;
+  pagelink.textContent = user.html_url;
   followers.textContent = `Followers: ${user.followers}`;
   following.textContent = `Following: ${user.following}`;
   bio.textContent = `Bio: ${user.bio}`;
@@ -101,6 +109,8 @@ function cardCreator(user) {
   infoDiv.appendChild(followers);
   infoDiv.appendChild(following);
   infoDiv.appendChild(bio);
+
+  console.log(cardDiv);
 
   return cardDiv;
 }
