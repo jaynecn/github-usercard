@@ -3,6 +3,19 @@
            https://api.github.com/users/<your name>
 */
 
+function getGithubData() {
+  axios.get('https://api.github.com/users/jaynecn')
+    .then(() => {
+        // deal with the response data in here
+        debugger
+    })
+    .catch(() => {
+        // deal with the error in here
+        debugger
+    })
+}
+
+
 /* Step 2: Inspect and study the data coming back, this is YOUR 
    github info! You will need to understand the structure of this 
    data in order to use it to build your component function 
@@ -45,6 +58,53 @@ const followersArray = [];
 </div>
 
 */
+
+function cardCreator(user) {
+
+  const cardDiv = document.createElement('div');
+  const image = document.createElement('img');
+  const infoDiv = document.createElement('div');
+  const name = document.createElement('h3');
+  const username = document.createElement('p');
+  const location = document.createElement('p');
+  const profile = document.createElement('p');
+  const pagelink = document.createElement('a');
+  const followers = document.createElement('p');
+  const following = document.createElement('p');
+  const bio = document.createElement('p');
+
+  cardDiv.classList.add('card');
+  infoDiv.classList.add('card-info');
+  name.classList.add('name');
+  username.classList.add('username');
+  
+  image.setAttribute('src', user.avatar_url);
+  pagelink.setAttribute('href', user.html_url);
+  
+  name.textContent = user.name;
+  username.textContent = user.login;
+  location.textContent = `Location: ${user.location}`;
+  profile.textContent = 'Profile:';
+  page.link.textContent = user.html_url;
+  followers.textContent = `Followers: ${user.followers}`;
+  following.textContent = `Following: ${user.following}`;
+  bio.textContent = `Bio: ${user.bio}`;
+
+  cardDiv.appendChild(image);
+  cardDiv.appendChild(infoDiv);
+
+  infoDiv.appendChild(name);
+  infoDiv.appendChild(username);
+  infoDiv.appendChild(location);
+  infoDiv.appendChild(profile);
+  profile.appendChild(pagelink);
+  infoDiv.appendChild(followers);
+  infoDiv.appendChild(following);
+  infoDiv.appendChild(bio);
+
+  return cardDiv;
+}
+
 
 /* List of LS Instructors Github username's: 
   tetondan
